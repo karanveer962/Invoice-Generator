@@ -33,8 +33,8 @@ public class InvoiceGeneratorTest {
     @Test
     public void calculateInvoice_ShouldReturnCorrectValues_WhenRidesProvided() {
         List<Ride> rides = Arrays.asList(
-                new Ride(5.0, 10),  // Rs. 60
-                new Ride(3.0, 5)    // Rs. 35
+                new Ride(5.0, 5,Ride.RideCategory.NORMAL),
+                new Ride(5.0, 5,Ride.RideCategory.PREMIUM)
         );
 
 
@@ -43,8 +43,8 @@ public class InvoiceGeneratorTest {
 
 
         assertEquals(2, invoice.getTotalRides());
-        assertEquals(95.0, invoice.getTotalFare(), 0.0);
-        assertEquals(47.5, invoice.getAverageFarePerRide(), 0.0);
+        assertEquals(140.0, invoice.getTotalFare(), 0.0);
+        assertEquals(70.0, invoice.getAverageFarePerRide(), 0.0);
     }
 
 }

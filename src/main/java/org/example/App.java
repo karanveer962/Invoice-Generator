@@ -13,8 +13,8 @@ public class App
 
         // Add rides for a user
         List<Ride> userRides = new ArrayList<>();
-        userRides.add(new Ride(5.0, 10));
-        userRides.add(new Ride(3.0, 5));
+        userRides.add(new Ride(5.0, 5, Ride.RideCategory.NORMAL));
+        userRides.add(new Ride(5.0, 5,Ride.RideCategory.PREMIUM));
 
         invoiceService.addRide("user123", userRides);
 
