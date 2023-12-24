@@ -3,6 +3,10 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class InvoiceGeneratorTest {
     private InvoiceGenerator invoiceGenerator;
 
@@ -12,29 +16,42 @@ public class InvoiceGeneratorTest {
     }
 
     @Test
-    public void calculateFare_ShouldReturnMinimumFare_WhenDistanceAndTimeAreZero() {
+    public void calculateTotalFare_ShouldReturnZero_WhenNoRides() {
 
-        double distance = 0.0;
-        int time = 0;
-
-
-        double fare = invoiceGenerator.calculateFare(distance, time);
+        List<Ride> rides = new ArrayList<>();
 
 
-        assertEquals(5.0, fare,0.0);
+        double totalFare = invoiceGenerator.calculateTotalFare(rides);
+
+
+        assertEquals(0.0, totalFare, 0.0);
     }
 
     @Test
-    public void calculateFare_ShouldReturnCorrectFare_WhenDistanceAndTimeAreNonZero() {
+    public void calculateTotalFare_ShouldReturnCorrectFare_WhenSingleRide() {
 
-        double distance = 5.0;
-        int time = 10;
+        List<Ride> rides = new ArrayList<>();
+        rides.add(new Ride(5.0, 10));  // Single ride: 5 kilometers, 10 minutes
 
 
-        double fare = invoiceGenerator.calculateFare(distance, time);
+        double totalFare = invoiceGenerator.calculateTotalFare(rides);
 
-        //  Rs. 10 per km * 5 + Rs. 1 per min * 10 = Rs. 50 + Rs. 10 = Rs. 60
-        assertEquals(60.0, fare ,0.0);
+
+        assertEquals(60.0, totalFare, 0.0);
+    }
+
+    @Test
+    public void calculateTotalFare_ShouldReturnCorrectFare_WhenMultipleRides() {
+
+        List<Ride> rides = new ArrayList<>();
+        rides.add(new Ride(5.0, 10));  // Ride 1: 5 kilometers, 10 minutes
+        rides.add(new Ride(3.0, 8));   // Ride 2: 3 kilometers, 8 minutes
+
+
+        double totalFare = invoiceGenerator.calculateTotalFare(rides);
+
+
+        assertEquals( 98.0 ,totalFare, 0.0);
     }
 
 }
