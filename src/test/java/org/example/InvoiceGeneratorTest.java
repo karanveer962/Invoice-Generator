@@ -5,14 +5,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class InvoiceGeneratorTest {
-    private InvoiceGenerator invoiceGenerator;
+    private InvoiceService invoiceService;
 
     @Before    // Create a single instance of InvoiceGenerator to be reused in each test
     public void setUp() {
-        invoiceGenerator = new InvoiceGenerator();
+        invoiceService = new InvoiceService();
     }
 
     @Test
@@ -20,8 +21,8 @@ public class InvoiceGeneratorTest {
 
         List<Ride> rides = Arrays.asList();
 
-
-        Invoice invoice = invoiceGenerator.calculateInvoice(rides);
+        invoiceService.addRide("123",rides);
+        Invoice invoice =invoiceService.getInvoiceForUser("123");
 
 
         assertEquals(0, invoice.getTotalRides());
@@ -37,7 +38,8 @@ public class InvoiceGeneratorTest {
         );
 
 
-        Invoice invoice = invoiceGenerator.calculateInvoice(rides);
+        invoiceService.addRide("123",rides);
+        Invoice invoice =invoiceService.getInvoiceForUser("123");
 
 
         assertEquals(2, invoice.getTotalRides());
