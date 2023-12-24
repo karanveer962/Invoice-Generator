@@ -16,14 +16,18 @@ public class InvoiceGenerator {
         return Math.max(fare,5.0);
     }
 
-    public double calculateTotalFare(List<Ride> rides){
+    public Invoice calculateTotalFare(List<Ride> rides){
         double totalFare = 0.0;
+
+        int totalRides = rides.size();
 
         for (Ride ride : rides) {
             double rideFare = calculateFare(ride.getDistance(), ride.getDuration());
             totalFare += rideFare;
         }
 
-        return totalFare;
+        double averageFarePerRide = (totalRides > 0) ? totalFare / totalRides : 0.0;
+
+        return new Invoice(totalRides, totalFare, averageFarePerRide);
     }
 }

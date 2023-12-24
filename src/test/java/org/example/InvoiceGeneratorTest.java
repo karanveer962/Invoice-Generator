@@ -16,42 +16,33 @@ public class InvoiceGeneratorTest {
     }
 
     @Test
-    public void calculateTotalFare_ShouldReturnZero_WhenNoRides() {
+    public void calculateInvoice_ShouldReturnZeroValues_WhenNoRidesProvided() {
 
-        List<Ride> rides = new ArrayList<>();
-
-
-        double totalFare = invoiceGenerator.calculateTotalFare(rides);
+        List<Ride> rides = Arrays.asList();
 
 
-        assertEquals(0.0, totalFare, 0.0);
+        Invoice invoice = invoiceGenerator.calculateInvoice(rides);
+
+
+        assertEquals(0, invoice.getTotalRides());
+        assertEquals(0.0, invoice.getTotalFare(), 0.0);
+        assertEquals(0.0, invoice.getAverageFarePerRide(), 0.0);
     }
 
     @Test
-    public void calculateTotalFare_ShouldReturnCorrectFare_WhenSingleRide() {
-
-        List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(5.0, 10));  // Single ride: 5 kilometers, 10 minutes
-
-
-        double totalFare = invoiceGenerator.calculateTotalFare(rides);
+    public void calculateInvoice_ShouldReturnCorrectValues_WhenRidesProvided() {
+        List<Ride> rides = Arrays.asList(
+                new Ride(5.0, 10),  // Rs. 60
+                new Ride(3.0, 5)    // Rs. 35
+        );
 
 
-        assertEquals(60.0, totalFare, 0.0);
-    }
-
-    @Test
-    public void calculateTotalFare_ShouldReturnCorrectFare_WhenMultipleRides() {
-
-        List<Ride> rides = new ArrayList<>();
-        rides.add(new Ride(5.0, 10));  // Ride 1: 5 kilometers, 10 minutes
-        rides.add(new Ride(3.0, 8));   // Ride 2: 3 kilometers, 8 minutes
+        Invoice invoice = invoiceGenerator.calculateInvoice(rides);
 
 
-        double totalFare = invoiceGenerator.calculateTotalFare(rides);
-
-
-        assertEquals( 98.0 ,totalFare, 0.0);
+        assertEquals(2, invoice.getTotalRides());
+        assertEquals(95.0, invoice.getTotalFare(), 0.0);
+        assertEquals(47.5, invoice.getAverageFarePerRide(), 0.0);
     }
 
 }
